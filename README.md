@@ -1,6 +1,6 @@
 # Jet Observable Library
 
-[![Tests](https://github.com/atharva/jet-observables-lib/actions/workflows/tests.yml/badge.svg)](https://github.com/atharva/jet-observables-lib/actions/workflows/tests.yml)
+[![Tests](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml/badge.svg)](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml)
 
 Early-stage scientific Python library for jet-level observables in the **HEPSIM** context, inspired by the **Machine Learning for Science** project direction.
 
