@@ -57,4 +57,11 @@ OBSERVABLES = {
         "depends_on": ["eta", "phi", "pt"],
         "complexity": "O(N)",
     },
+    "ptd": {
+        "irc_safe": False,
+        "category": "shape",
+        "description": "pT dispersion",
+        "depends_on": ["pt"],
+        "complexity": "O(N)",
+    },
 }

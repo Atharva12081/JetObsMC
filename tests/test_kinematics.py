@@ -3,6 +3,7 @@ import pytest
 
 from jet_observables.fourvector import FourVector, invariant_mass, minkowski_dot
 from jet_observables.jet import Jet
+from jet_observables.observables.base import Observable
 from jet_observables.observables.shapes import (
     energy_correlation_e2,
     jet_width,
@@ -95,3 +96,18 @@ def test_fourvector_dot_matches_function() -> None:
     a = FourVector(20.0, 3.0, 4.0, 5.0)
     b = FourVector(10.0, -1.0, 2.0, -3.0)
     assert np.isclose(a.dot(b), minkowski_dot(a.as_array(), b.as_array()))
+
+
+def test_e2_is_invariant_under_particle_permutation() -> None:
+    particles = np.array(
+        [[40.0, 20.0, 5.0, 34.0], [25.0, 7.0, 4.0, 23.0], [18.0, -5.0, 2.0, 16.0]]
+    )
+    jet_a = Jet(particles)
+    jet_b = Jet(particles[[2, 0, 1]])
+    assert np.isclose(energy_correlation_e2(jet_a), energy_correlation_e2(jet_b))
+
+
+def test_observable_base_compute_requires_override() -> None:
+    obs = Observable(name="dummy", irc_safe=True, complexity="O(1)")
+    with pytest.raises(NotImplementedError):
+        obs.compute(Jet(np.empty((0, 4), dtype=float)))

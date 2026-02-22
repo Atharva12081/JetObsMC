@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - name: Checkout
@@ -27,3 +27,12 @@ jobs:
 
       - name: Run tests
         run: PYTHONPATH=jet_observables pytest -q
+
+      - name: Execute notebook
+        run: |
+          PYTHONPATH=jet_observables jupyter nbconvert \
+            --to notebook \
+            --execute examples/demo_analysis.ipynb \
+            --output executed-demo_analysis.ipynb \
+            --output-dir /tmp \
+            --ExecutePreprocessor.timeout=300

@@ -61,3 +61,16 @@ def nsubjettiness_tau1(jet: Jet) -> float:
     dphi = wrap_delta_phi(phis - jet.phi())
     dr = np.hypot(etas - jet.eta(), dphi)
     return float(np.sum(pts * dr))
+
+
+def pt_dispersion(jet: Jet) -> float:
+    """pT dispersion: sqrt(sum_i pT_i^2) / sum_i pT_i."""
+    if jet.particles.shape[0] == 0:
+        return 0.0
+
+    pts = _constituent_pts(jet.particles)
+    denom = float(np.sum(pts))
+    if denom == 0.0:
+        return 0.0
+
+    return float(np.sqrt(np.sum(pts * pts)) / denom)
