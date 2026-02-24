@@ -9,7 +9,7 @@ The project is built for reproducible Monte Carlo validation workflows with one 
 
 - Main page: `docs/index.md`
 - Observable catalog: `docs/observables.md`
-- Expected URL (Pages source = `docs/`): `https://atharva12081.github.io/jet-observables-lib/`
+- Expected URL (Pages source = `docs/`): `https://atharva12081.github.io/JetObsMC/`
 
 ## Current Delivery Status
 
