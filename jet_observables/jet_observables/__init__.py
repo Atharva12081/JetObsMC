@@ -1,14 +1,6 @@
-"""Jet observables library."""
+"""Backward-compatibility shim for legacy `jet_observables` imports.
 
-from .evaluation import canonical_constituent_mask, ptyphipdg_to_p4
-from .fourvector import FourVector
-from .jet import Jet
-from .metadata import OBSERVABLES
+Use `jetobsmc` as the canonical package name.
+"""
 
-__all__ = [
-    "FourVector",
-    "Jet",
-    "OBSERVABLES",
-    "canonical_constituent_mask",
-    "ptyphipdg_to_p4",
-]
+from jetobsmc import *  # noqa: F401,F403

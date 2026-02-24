@@ -24,15 +24,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install .
 
       - name: Run tests
-        run: PYTHONPATH=jet_observables pytest -q
+        run: pytest -q
 
       - name: Execute notebook
         run: |
-          PYTHONPATH=jet_observables jupyter nbconvert \
+          jupyter nbconvert \
             --to notebook \
             --execute examples/demo_analysis.ipynb \
             --output executed-demo_analysis.ipynb \
+            --output-dir /tmp \
+            --ExecutePreprocessor.timeout=300
+          jupyter nbconvert \
+            --to notebook \
+            --execute examples/mc_validation_workflow.ipynb \
+            --output executed-mc_validation_workflow.ipynb \
             --output-dir /tmp \
             --ExecutePreprocessor.timeout=300

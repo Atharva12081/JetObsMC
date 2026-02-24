@@ -1,19 +1,19 @@
 import numpy as np
 
-from jet_observables.evaluation import (
+from jetobsmc.evaluation import (
     canonical_constituent_mask,
     constituent_multiplicity,
     leading_constituent_pt,
     ptyphipdg_to_p4,
     strip_padding,
 )
-from jet_observables.fourvector import (
+from jetobsmc.fourvector import (
     boost_to_jet_rest_frame,
     invariant_mass,
     rest_frame_momentum_residual,
 )
-from jet_observables.jet import Jet
-from jet_observables.observables.shapes import pt_dispersion
+from jetobsmc.jet import Jet
+from jetobsmc.observables.shapes import pt_dispersion
 
 
 def test_padding_mask_identifies_only_real_constituents() -> None:

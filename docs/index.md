@@ -7,13 +7,14 @@ title: Monte Carlo Validation Project Page
   <div class="row g-4 align-items-center">
     <div class="col-lg-8">
       <span class="badge badge-soft text-uppercase mb-3">HEPSIM • ML4SCI</span>
-      <h1 class="display-6 fw-bold mb-3">Jet Observable Library for Monte Carlo Validation</h1>
+      <h1 class="display-6 fw-bold mb-3">JetObsMC: Jet Observables for Monte Carlo Validation</h1>
       <p class="lead muted mb-4">
         A unified scientific software stack for jet observables, built to compare Monte Carlo generator predictions against LHC-style data with one consistent API, metadata contract, and validation workflow.
       </p>
       <div class="d-flex flex-wrap gap-2">
         <a class="btn btn-primary" href="https://github.com/Atharva12081/jet-observables-lib">Repository</a>
         <a class="btn btn-outline-primary" href="https://ml4sci.org/gsoc/2026/proposal_HEP.html">ML4SCI Project Catalog</a>
+        <a class="btn btn-outline-secondary" href="{{ '/observables/' | relative_url }}">Observable Catalog</a>
       </div>
     </div>
     <div class="col-lg-4">
@@ -21,11 +22,12 @@ title: Monte Carlo Validation Project Page
         <div class="card-body">
           <h2 class="h6 text-uppercase text-secondary">Current Prototype Status</h2>
           <ul class="mb-0">
+            <li>Pip-installable package (`setup.py`)</li>
+            <li>30-observable catalog (kinematic/shape/substructure/groomed-proxy)</li>
             <li>FourVector + Jet core abstractions</li>
             <li>Observable metadata with IRC-safety tags</li>
-            <li>Core kinematics + substructure baseline</li>
-            <li>CI-backed pytest suite</li>
-            <li>Evaluation notebook (lab vs rest frame)</li>
+            <li>CI-backed pytest suite with reference checks</li>
+            <li>Monte Carlo validation notebooks (submission + workflow + Colab)</li>
           </ul>
         </div>
       </div>
@@ -167,8 +169,8 @@ title: Monte Carlo Validation Project Page
   <h2 class="section-title h3 mb-3">Minimal Usage Contract</h2>
 
 ```python
-from jet_observables.jet import Jet
-from jet_observables.observables.shapes import jet_width, energy_correlation_e2
+from jetobsmc.jet import Jet
+from jetobsmc.observables.shapes import jet_width, energy_correlation_e2
 
 jet = Jet(particles_e_px_py_pz)
 pt = jet.pt()

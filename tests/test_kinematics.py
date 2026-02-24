@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from jet_observables.fourvector import FourVector, invariant_mass, minkowski_dot
-from jet_observables.jet import Jet
-from jet_observables.observables.base import Observable
-from jet_observables.observables.shapes import (
+from jetobsmc.fourvector import FourVector, invariant_mass, minkowski_dot
+from jetobsmc.jet import Jet
+from jetobsmc.observables.base import Observable
+from jetobsmc.observables.shapes import (
     energy_correlation_e2,
     jet_width,
     nsubjettiness_tau1,

@@ -1,146 +1,160 @@
-# Jet Observable Library
+# JetObsMC
 
 [![Tests](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml/badge.svg)](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml)
 
-Early-stage scientific Python library for jet-level observables in the **HEPSIM** context, inspired by the **Machine Learning for Science** project direction.
+**JetObsMC** is a unified scientific Python library for jet observables in the **HEPSIM / ML4SCI** context.
+The project is built for reproducible Monte Carlo validation workflows with one API, one metadata schema, and one testing strategy.
 
 ## Project Page (GitHub Pages)
 
-A polished project-facing page is available in:
+- Main page: `docs/index.md`
+- Observable catalog: `docs/observables.md`
+- Expected URL (Pages source = `docs/`): `https://atharva12081.github.io/jet-observables-lib/`
 
-- `docs/index.md`
+## Current Delivery Status
 
-It is structured for GitHub Pages + Jekyll and uses Bootstrap-based layout/styling.
+- Pip-installable package via `setup.py`
+- **30 observables** implemented across kinematic, shape, substructure, and groomed-proxy categories
+- Metadata registry with IRC safety, category, dependencies, and complexity
+- CI + pytest validation, including loop-based reference implementation checks
+- Multiple notebooks for Monte Carlo validation workflows
+- Canonical import path: `jetobsmc` (legacy `jet_observables` shim retained for compatibility)
 
-When Pages is enabled with source set to `docs/`, the site URL is expected at:
+## Installation
 
-- `https://atharva12081.github.io/jet-observables-lib/`
+Use standard (non-editable) installation:
 
-## Motivation
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -U pip
+pip install -r requirements.txt
+pip install .
+```
 
-Jet analysis often starts as notebook-local functions, which makes reproducibility and validation hard.
-This library provides a typed, testable core API built around a `Jet` object and explicit relativistic 4-vector handling.
+If your environment is offline or has restricted network access, use:
+
+```bash
+pip install . --no-build-isolation
+```
+
+Or install directly from GitHub:
+
+```bash
+pip install "git+https://github.com/Atharva12081/jet-observables-lib.git#egg=jetobsmc"
+```
+
+## Quick Verification
+
+Run tests locally:
+
+```bash
+pytest -q
+```
+
+Run the HEPSIM evaluation notebook end-to-end:
+
+```bash
+jupyter nbconvert --to notebook --execute --inplace examples/hepsim_evaluation_submission.ipynb
+```
+
+Smoke-test the installed package:
+
+```bash
+python -c "import jetobsmc; print(jetobsmc.__version__)"
+```
 
 ## Core API
 
 ```python
 import numpy as np
-from jet_observables.jet import Jet
-from jet_observables.observables.shapes import (
+from jetobsmc.jet import Jet
+from jetobsmc.observables import (
+    pt,
+    mass,
     jet_width,
-    energy_correlation_e2,
-    nsubjettiness_tau1,
-    pt_dispersion,
+    nsubjettiness_tau21,
+    energy_correlation_d2,
 )
 
 particles = np.array([
     [40.0, 20.0, 5.0, 34.0],
     [25.0, 7.0, 4.0, 23.0],
+    [18.0, -5.0, 2.0, 16.0],
 ])
 
 jet = Jet(particles)
-
-print(jet.pt())
-print(jet.mass())
-print(jet.eta())
-print(jet.phi())
-print(jet.delta_r(jet))
-print(jet_width(jet))
-print(energy_correlation_e2(jet))
-print(nsubjettiness_tau1(jet))
-print(pt_dispersion(jet))
+features = {
+    "pt": pt(jet),
+    "mass": mass(jet),
+    "width": jet_width(jet),
+    "tau21": nsubjettiness_tau21(jet),
+    "d2": energy_correlation_d2(jet),
+}
 ```
 
-## Implemented Observables (v0.2-dev)
+## Observable Coverage (30 total)
 
-- Kinematics: `pt`, `mass`, `eta`, `phi`, `delta_r`
-- Shapes/Substructure: `jet_width`, `e2` (two-point energy correlation), `tau1` (basic one-axis N-subjettiness proxy), `pTD` (pT dispersion)
+### Kinematic (5)
+- `pt`, `mass`, `eta`, `phi`, `delta_r`
 
-## Safety and Delivery Baseline
+### Shape (12)
+- `multiplicity`, `constituent_pt_sum`, `leading_constituent_pt`, `leading_pt_fraction`
+- `jet_width`, `girth`, `radial_moment_2`, `radial_moment_3`
+- `lha`, `thrust_angularity`, `ptd_angularity`, `ptd` (`pt_dispersion`)
 
-- Stable core abstractions: `FourVector` + `Jet`
-- Focused observable set (not over-expanded) with scientific metadata
-- CI-backed quality gate and reproducible local test workflow
-- 15+ tests for correctness, symmetry, edge cases, and numerical sanity
+### Substructure (9)
+- `tau1`, `tau2`, `tau3`, `tau21`, `tau32` (proxy N-subjettiness family)
+- `e2`, `e3`, `c2`, `d2` (energy correlator family)
 
-## Design Notes
+### Groomed proxies (4)
+- `soft_drop_zg_proxy`, `soft_drop_rg_proxy`
+- `soft_drop_pass_fraction_proxy`, `groomed_pair_mass_proxy`
 
-- 4-vector convention is `(E, px, py, pz)`.
-- `FourVector` exposes `.mass()`, `.pt()`, `.eta()`, `.phi()`, `.dot(other)`.
-- Pairwise observables use NumPy broadcasting to avoid Python nested loops.
-- FastJet is not integrated yet; this package is designed so adapter layers can be added later.
-- Extension stub available via `Observable` base interface for future plugin-style scaling.
+Notes:
+- Entries marked as proxy are intentionally lightweight baselines and are documented as such.
+- Full definitions and references: `docs/observables.md`.
 
-## Evaluation Readiness (HEPSIM Task)
+## Validation and Testing
 
-- Canonical zero-padding contract for dataset rows `(pT, y, phi, pdgid)` is implemented in `canonical_constituent_mask` and reused by conversion/multiplicity/leading-pT helpers.
-- `Jet.from_ptyphipdg(...)` converts padded HEPSIM-style inputs into clean constituent 4-vectors before observable computation.
-- Rest-frame boosting utilities include stability guards near `beta^2 -> 1` and a residual check: `rest_frame_momentum_residual`.
-- `pTD` is implemented to match the required evaluation observable set.
-- Clean grading notebook scaffold is provided at `examples/evaluation_template.ipynb`, including a lab-vs-rest AUC comparison table stub.
+Run tests:
+
+```bash
+pytest -q
+```
+
+What is validated:
+- 4-vector correctness (Minkowski dot, invariant mass behaviors, symmetry)
+- Edge-case robustness (empty jets, near-lightlike boosts, finite outputs)
+- Zero-padding contract for HEPSIM-style constituent arrays
+- **Reference implementation checks**: vectorized observables cross-checked against explicit loop-based baseline implementations
+
+## Monte Carlo Validation Notebooks
+
+- `examples/hepsim_evaluation_submission.ipynb`
+- `examples/hepsim_evaluation_colab.ipynb`
+- `examples/mc_validation_workflow.ipynb`
+- `examples/evaluation_template.ipynb`
+- `examples/benchmark_e2_scaling.ipynb`
+
+## Repository Ownership Policy
+
+- Maintainer and owner: **Atharva**.
+- The canonical upstream (`main`) is maintainer-controlled.
+- External users should use forks for experiments and submit proposals/PRs; direct edits to upstream are restricted to the maintainer.
 
 ## Physics Assumptions
 
-- Constituent input conversion from `(pT, y, phi, pdgid)` currently assumes massless constituents.
-- Dataset `y` is treated as rapidity for 4-vector reconstruction (`pz = pT*sinh(y)`, `E = pT*cosh(y)`).
-- `eta` used in angular observables is derived from reconstructed momentum and is approximately equal to `y` in the massless/high-energy limit.
+- 4-vector convention: `(E, px, py, pz)`
+- HEPSIM-style conversion from `(pT, y, phi, pdgid)` currently assumes massless constituents
+- `y` is used for reconstruction (`pz = pT*sinh(y)`, `E = pT*cosh(y)`)
+- `eta` is computed from reconstructed momentum; for massless constituents `y ≈ eta`
 
-## Installation
+## References
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-## Tests
-
-```bash
-PYTHONPATH=jet_observables pytest -q
-```
-
-## Validation Strategy
-
-- Invariant mass validation: unit tests verify analytic rest-frame and scaling behaviors for 4-vectors.
-- Massless particle checks: test vectors with `E^2 = |p|^2` are required to return near-zero invariant mass.
-- Numerical stability handling: mass uses `sqrt(max(m^2, 0))` to avoid negative values from floating-point noise near zero.
-- IRC safety metadata policy: each observable is annotated in `OBSERVABLES` with explicit IRC-safety tagging to make downstream analysis choices auditable.
-
-## Performance Note
-
-`e2` is implemented as an `O(N^2)` pairwise observable using NumPy broadcasting (no Python nested loops).
-
-Suggested micro-benchmark reference points:
-- `N=10`: effectively instantaneous on laptop CPU.
-- `N=50`: still interactive for analysis workflows.
-- `N=100`: cost grows quadratically as expected and becomes the dominant observable in a per-jet loop.
-
-Planned optimization path:
-- Keep vectorized NumPy kernel as baseline.
-- Add optional JIT acceleration (for example with `numba`) for large-scale scans.
-
-Benchmark notebook:
-- `examples/benchmark_e2_scaling.ipynb`
-- Includes empirical timing study for `N=10, 50, 100` and higher.
-
-## Roadmap to GSoC
-
-This prototype serves as a foundational implementation aligned with the HEPSIM Jet Observable Library project under Machine Learning for Science. Planned expansions include grooming observables, plugin architecture, and Monte Carlo validation workflows.
-
-## Roadmap to ~30 Observables
-
-- Extend substructure set: higher-point ECFs, angularities, grooming-sensitive observables
-- Add plugin architecture for user-defined observables
-- Add dataset adapters and batched evaluation APIs
-
-### Version 0.2
-
-- Grooming-oriented observables
-- Observable plugin registry
-- Better notebook-to-library pathways
-
-### Version 0.3
-
-- FastJet bindings/adapters
-- Benchmarking against Monte Carlo pipelines
-- Performance profiling and vectorized batch kernels
+- [FastJet](https://fastjet.fr/)
+- [EnergyFlow](https://energyflow.network/)
+- [N-subjettiness (arXiv:1011.2268)](https://arxiv.org/abs/1011.2268)
+- [Energy correlators (arXiv:1305.0007)](https://arxiv.org/abs/1305.0007)
+- [Lund jet plane (arXiv:1807.04758)](https://arxiv.org/abs/1807.04758)
+- [Soft Drop (arXiv:1402.2657)](https://arxiv.org/abs/1402.2657)
