@@ -1,6 +1,6 @@
 # JetObsMC
 
-[![Tests](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml/badge.svg)](https://github.com/Atharva12081/jet-observables-lib/actions/workflows/tests.yml)
+[![Tests](https://github.com/Atharva12081/JetObsMC/actions/workflows/tests.yml/badge.svg)](https://github.com/Atharva12081/JetObsMC/actions/workflows/tests.yml)
 
 **JetObsMC** is a unified scientific Python library for jet observables in the **HEPSIM / ML4SCI** context.
 The project is built for reproducible Monte Carlo validation workflows with one API, one metadata schema, and one testing strategy.
@@ -18,7 +18,7 @@ The project is built for reproducible Monte Carlo validation workflows with one 
 - Metadata registry with IRC safety, category, dependencies, and complexity
 - CI + pytest validation, including loop-based reference implementation checks
 - Multiple notebooks for Monte Carlo validation workflows
-- Canonical import path: `jetobsmc` (legacy `jet_observables` shim retained for compatibility)
+- Canonical import path: `jetobsmc`
 
 ## Installation
 
@@ -41,7 +41,7 @@ pip install . --no-build-isolation
 Or install directly from GitHub:
 
 ```bash
-pip install "git+https://github.com/Atharva12081/jet-observables-lib.git#egg=jetobsmc"
+pip install "git+https://github.com/Atharva12081/JetObsMC.git#egg=jetobsmc"
 ```
 
 ## Quick Verification

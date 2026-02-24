@@ -12,7 +12,7 @@ title: Monte Carlo Validation Project Page
         A unified scientific software stack for jet observables, built to compare Monte Carlo generator predictions against LHC-style data with one consistent API, metadata contract, and validation workflow.
       </p>
       <div class="d-flex flex-wrap gap-2">
-        <a class="btn btn-primary" href="https://github.com/Atharva12081/jet-observables-lib">Repository</a>
+        <a class="btn btn-primary" href="https://github.com/Atharva12081/JetObsMC">Repository</a>
         <a class="btn btn-outline-primary" href="https://ml4sci.org/gsoc/2026/proposal_HEP.html">ML4SCI Project Catalog</a>
         <a class="btn btn-outline-secondary" href="{{ '/observables/' | relative_url }}">Observable Catalog</a>
       </div>
