@@ -8,8 +8,8 @@ setup(
     long_description_content_type="text/markdown",
     python_requires=">=3.10",
     install_requires=["numpy>=1.24"],
-    packages=find_packages(where="jet_observables"),
-    package_dir={"": "jet_observables"},
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     extras_require={
         "dev": [
             "pytest>=7.0",
