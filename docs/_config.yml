@@ -1,0 +1,8 @@
+title: Jet Observable Library
+description: Unified jet observables for Monte Carlo validation in the HEPSIM / ML4SCI context.
+url: "https://atharva12081.github.io"
+baseurl: "/jet-observables-lib"
+markdown: kramdown
+kramdown:
+  input: GFM
+permalink: pretty

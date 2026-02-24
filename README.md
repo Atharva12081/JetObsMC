@@ -4,6 +4,18 @@
 
 Early-stage scientific Python library for jet-level observables in the **HEPSIM** context, inspired by the **Machine Learning for Science** project direction.
 
+## Project Page (GitHub Pages)
+
+A polished project-facing page is available in:
+
+- `docs/index.md`
+
+It is structured for GitHub Pages + Jekyll and uses Bootstrap-based layout/styling.
+
+When Pages is enabled with source set to `docs/`, the site URL is expected at:
+
+- `https://atharva12081.github.io/jet-observables-lib/`
+
 ## Motivation
 
 Jet analysis often starts as notebook-local functions, which makes reproducibility and validation hard.
@@ -65,7 +77,7 @@ print(pt_dispersion(jet))
 - `Jet.from_ptyphipdg(...)` converts padded HEPSIM-style inputs into clean constituent 4-vectors before observable computation.
 - Rest-frame boosting utilities include stability guards near `beta^2 -> 1` and a residual check: `rest_frame_momentum_residual`.
 - `pTD` is implemented to match the required evaluation observable set.
-- Clean grading notebook scaffold is provided at `/Users/atharva/Documents/Code/ML4SCI/jet-observables-lib/examples/evaluation_template.ipynb`, including a lab-vs-rest AUC comparison table stub.
+- Clean grading notebook scaffold is provided at `examples/evaluation_template.ipynb`, including a lab-vs-rest AUC comparison table stub.
 
 ## Physics Assumptions
 
@@ -108,7 +120,7 @@ Planned optimization path:
 - Add optional JIT acceleration (for example with `numba`) for large-scale scans.
 
 Benchmark notebook:
-- `/Users/atharva/Documents/Code/ML4SCI/jet-observables-lib/examples/benchmark_e2_scaling.ipynb`
+- `examples/benchmark_e2_scaling.ipynb`
 - Includes empirical timing study for `N=10, 50, 100` and higher.
 
 ## Roadmap to GSoC

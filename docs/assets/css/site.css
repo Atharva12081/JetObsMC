@@ -1,0 +1,46 @@
+:root {
+  --accent: #0d6efd;
+  --ink: #1e2430;
+  --muted: #5b6577;
+  --paper: #f7f9fc;
+}
+
+body {
+  background: radial-gradient(circle at 15% 10%, #eef4ff 0%, #ffffff 45%);
+  color: var(--ink);
+}
+
+.hero {
+  border: 1px solid #d9e2f2;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f3f7ff 100%);
+  box-shadow: 0 10px 25px rgba(30, 36, 48, 0.07);
+}
+
+.section-title {
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.card {
+  border-radius: 0.85rem;
+  border: 1px solid #dce5f5;
+}
+
+.badge-soft {
+  background-color: #e8f0ff;
+  color: #11479e;
+}
+
+code,
+pre code {
+  font-size: 0.92rem;
+}
+
+.table thead th {
+  white-space: nowrap;
+}
