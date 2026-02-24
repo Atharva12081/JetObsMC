@@ -137,11 +137,12 @@ What is validated:
 - `examples/evaluation_template.ipynb`
 - `examples/benchmark_e2_scaling.ipynb`
 
-## Repository Ownership Policy
+## Open Source and Contributions
 
-- Maintainer and owner: **Atharva**.
-- The canonical upstream (`main`) is maintainer-controlled.
-- External users should use forks for experiments and submit proposals/PRs; direct edits to upstream are restricted to the maintainer.
+- JetObsMC is fully open source under the MIT License (`LICENSE`).
+- Anyone can use, modify, and redistribute the code under the license terms.
+- Community contributions are welcome through issues and pull requests.
+- See `CONTRIBUTING.md` for contribution workflow details.
 
 ## Physics Assumptions
 
